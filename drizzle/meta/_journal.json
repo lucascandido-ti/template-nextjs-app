@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1705602955074,
+      "tag": "0000_spicy_rogue",
+      "breakpoints": true
+    }
+  ]
+}
