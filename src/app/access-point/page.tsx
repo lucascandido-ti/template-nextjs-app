@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   Divider,
   Flex,
@@ -29,6 +30,11 @@ import { trpc } from "../api/trpc/_trpc/client";
 export function AccessPoint() {
   const getTodos = trpc.getTodos.useQuery();
   const addTodo = trpc.addTodo.useMutation({
+    onSettled: () => {
+      getTodos.refetch();
+    },
+  });
+  const setDone = trpc.setDone.useMutation({
     onSettled: () => {
       getTodos.refetch();
     },
@@ -61,8 +67,24 @@ export function AccessPoint() {
                   getTodos.data.map(({ id, content, done }) => {
                     return (
                       <>
-                        <Tr>
-                          <Td>{id}</Td>
+                        <Tr key={id}>
+                          <Td>
+                            <FormControl key={id}>
+                              <Checkbox
+                                id={`check-${{ id }}`}
+                                isChecked={!!done}
+                                onChange={async () => {
+                                  console.log(
+                                    `Teste: #ID: ${id}, #DONE: ${done}`
+                                  );
+                                  await setDone.mutate({
+                                    id: id,
+                                    done: !!done ? 0 : 1,
+                                  });
+                                }}
+                              />
+                            </FormControl>
+                          </Td>
                           <Td>{content}</Td>
                           <Td isNumeric>{done}</Td>
                         </Tr>
