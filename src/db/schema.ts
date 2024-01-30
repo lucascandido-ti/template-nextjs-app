@@ -5,3 +5,4 @@ export const todos = sqliteTable("todos", {
   content: text("content"),
   done: integer("done"),
 });
+
