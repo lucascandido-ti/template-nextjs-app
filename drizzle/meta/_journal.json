@@ -1,12 +1,26 @@
 {
   "version": "5",
-  "dialect": "sqlite",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1706632067128,
-      "tag": "0000_certain_mastermind",
+      "when": 1710262748903,
+      "tag": "0000_sweet_nightshade",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1710263156984,
+      "tag": "0001_chubby_rocket_racer",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1710264725810,
+      "tag": "0002_late_roulette",
       "breakpoints": true
     }
   ]

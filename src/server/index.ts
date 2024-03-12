@@ -1,43 +1,25 @@
-import Datebase from "better-sqlite3";
+import { drizzle } from "drizzle-orm/postgres-js";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import postgres from "postgres";
+import { UserRouter, DeviceRouter, devicesRouter, usersRouter } from "./routes";
 
-import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
+export const host = process.env.POSTGRES_HOST;
+export const port = process.env.POSTGRES_PORT;
+export const database = process.env.POSTGRES_DB;
+export const user = process.env.POSTGRES_USER;
+export const password = process.env.POSTGRES_PASSWORD;
 
-import { z } from "zod";
+export const databaseURL = `postgres://${user}:${password}@${host}:${port}/${database}`;
 
-import { publicProcedure, router } from "./trpc";
+const migrationClient = postgres(databaseURL, { max: 1 });
+migrate(drizzle(migrationClient), { migrationsFolder: "drizzle" });
 
-import { todos } from "@/db/schema";
+const queryClient = postgres(databaseURL);
+export const db = drizzle(queryClient);
 
-const sqlite = new Datebase("sqlite.db");
-const db = drizzle(sqlite);
+export const appRouter = {
+  ...devicesRouter,
+  ...usersRouter,
+};
 
-migrate(db, { migrationsFolder: "drizzle" });
-
-export const appRouter = router({
-  getTodos: publicProcedure.query(async () => {
-    return await db.select().from(todos).all();
-  }),
-  addTodo: publicProcedure.input(z.string()).mutation(async (opts) => {
-    await db.insert(todos).values({ content: opts.input, done: 0 }).run();
-    return true;
-  }),
-  setDone: publicProcedure
-    .input(
-      z.object({
-        id: z.number(),
-        done: z.number(),
-      })
-    )
-    .mutation(async (opts) => {
-      await db
-        .update(todos)
-        .set({ done: opts.input.done })
-        .where(eq(todos.id, opts.input.id))
-        .run();
-      return true;
-    }),
-});
-
-export type AppRouter = typeof appRouter;
+export type AppRouter = DeviceRouter & UserRouter;

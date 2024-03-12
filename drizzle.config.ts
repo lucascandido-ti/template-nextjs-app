@@ -1,10 +1,11 @@
 import type { Config } from "drizzle-kit";
+import { databaseURL } from "@/server";
 
 export default {
   schema: "./src/db/schema.ts",
   out: "./drizzle",
-  driver: "better-sqlite",
+  driver: "pg",
   dbCredentials: {
-    url: "sqlite.db",
+    connectionString: databaseURL!,
   },
 } satisfies Config;

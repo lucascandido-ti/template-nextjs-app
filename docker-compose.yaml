@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres-testviewer
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.docker/postgres-db:/opt/postgres/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
