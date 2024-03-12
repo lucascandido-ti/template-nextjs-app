@@ -22,6 +22,20 @@
       "when": 1710264725810,
       "tag": "0002_late_roulette",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1710266337869,
+      "tag": "0003_little_makkari",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1710266491350,
+      "tag": "0004_eminent_warhawk",
+      "breakpoints": true
     }
   ]
 }

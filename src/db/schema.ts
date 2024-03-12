@@ -22,12 +22,18 @@ export const devices = pgTable(
   "devices",
   {
     id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    description: text("description"),
     host: text("tbn").notNull(),
     created_at: date("created_at").notNull(),
     updated_at: date("updated_at"),
   },
   (devices) => ({
     devices_id_idx: index("devices_id_idx").on(devices.id),
+    devices_name_idx: index("devices_name_idx").on(devices.name),
+    devices_description_idx: index("devices_description_idx").on(
+      devices.description
+    ),
     devices_host_idx: index("devices_host_idx").on(devices.host),
     devices_created_at_idx: index("devices_created_at_idx").on(
       devices.created_at
