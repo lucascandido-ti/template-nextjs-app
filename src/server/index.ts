@@ -1,7 +1,10 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
-import { UserRouter, DeviceRouter, devicesRouter, usersRouter } from "./routes";
+
+import { publicProcedure, router } from "./trpc";
+import { devices, users } from "./db";
+import { z } from "zod";
 
 export const host = process.env.POSTGRES_HOST;
 export const port = process.env.POSTGRES_PORT;
@@ -17,9 +20,40 @@ migrate(drizzle(migrationClient), { migrationsFolder: "drizzle" });
 const queryClient = postgres(databaseURL);
 export const db = drizzle(queryClient);
 
-export const appRouter = {
-  ...devicesRouter,
-  ...usersRouter,
-};
+export const appRouter = router({
+  getUsers: publicProcedure.query(async () => {
+    return await db.select().from(users);
+  }),
+  getDevices: publicProcedure.query(async () => {
+    return await db.select().from(devices);
+  }),
+  addDevice: publicProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        description: z.string().optional(),
+        host: z.string(),
+      })
+    )
+    .mutation(async (opts) => {
+      const { name, description, host } = opts.input;
 
-export type AppRouter = DeviceRouter & UserRouter;
+      await db
+        .insert(devices)
+        .values({
+          // @ts-ignore
+          name: name,
+          description,
+          host: host,
+          created_at: new Date(),
+          updated_at: new Date(),
+        })
+        .catch((err) => {
+          console.log("Erro ao tentar inserir um novo dispositivo", err);
+        });
+
+      return true;
+    }),
+});
+
+export type AppRouter = typeof appRouter;

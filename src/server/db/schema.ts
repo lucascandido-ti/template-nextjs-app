@@ -1,9 +1,9 @@
-import { date, index, integer, pgTable, text } from "drizzle-orm/pg-core";
+import { date, index, pgTable, serial, text } from "drizzle-orm/pg-core";
 
 export const users = pgTable(
   "users",
   {
-    id: integer("id").primaryKey(),
+    id: serial("id").notNull().primaryKey(),
     tbn: text("tbn").notNull(),
     email: text("email").unique().notNull(),
     created_at: date("created_at").notNull(),
@@ -21,11 +21,11 @@ export const users = pgTable(
 export const devices = pgTable(
   "devices",
   {
-    id: text("id").primaryKey(),
+    id: serial("id").notNull().primaryKey(),
     name: text("name").notNull(),
     description: text("description"),
-    host: text("tbn").notNull(),
-    created_at: date("created_at").notNull(),
+    host: text("host").notNull(),
+    created_at: date("created_at").notNull().defaultNow(),
     updated_at: date("updated_at"),
   },
   (devices) => ({
