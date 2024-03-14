@@ -1,5 +1,7 @@
 import { DrawerListProps } from "@/types";
-import { FiEye, FiHome } from "react-icons/fi";
+import { FiHome } from "react-icons/fi";
+import { DiRasberryPi } from "react-icons/di";
+import { TbDeviceDesktopPlus } from "react-icons/tb";
 
 export const drawerList: DrawerListProps[] = [
   {
@@ -12,12 +14,18 @@ export const drawerList: DrawerListProps[] = [
   },
   {
     type: "title",
-    title: "Pontos de Acesso",
+    title: "Dispositivos",
   },
   {
     type: "unique",
-    title: "Monitorar",
-    route: "/access-point",
-    icon: FiEye,
+    title: "Lista de dispositivos",
+    route: "/devices",
+    icon: DiRasberryPi,
+  },
+  {
+    type: "unique",
+    title: "Adicionar dispositivo",
+    route: "/devices/create",
+    icon: TbDeviceDesktopPlus,
   },
 ];

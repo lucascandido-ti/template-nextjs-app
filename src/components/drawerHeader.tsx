@@ -29,7 +29,7 @@ const DrawerHeader: React.FC = () => {
       >
         <Fade in={isOpen} unmountOnExit={true}>
           <Text size="2xl" color="white" whiteSpace="nowrap">
-            TBTemplateView
+            Test Viewer
           </Text>
         </Fade>
       </Flex>

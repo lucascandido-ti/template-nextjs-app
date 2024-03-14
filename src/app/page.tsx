@@ -6,8 +6,8 @@ export default function Home() {
   return (
     <main>
       <Header
-        title="TBTemplateView"
-        subtitle="Template para criação de aplicação Web"
+        title="Test Viewer"
+        subtitle="Portal para controle de ATMs em homologação e acesso remoto"
       />
     </main>
   );

@@ -40,7 +40,7 @@ const AppBar: React.FC = () => {
   });
 
   const user = {
-    name: "Portal TBTemplateView",
+    name: "Portal Test Viewer",
   };
 
   return (
